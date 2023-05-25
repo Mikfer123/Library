@@ -1,5 +1,6 @@
 import Booking from "./booking.mjs";
 import Validator from "./validator.mjs";
+import Book from "./book.mjs";
 export default class Library {
     constructor() {
         this.bookList = []
@@ -8,33 +9,14 @@ export default class Library {
         this.userList = []
     }
 
-    // addToBooklist(book) {
-    //     Validator.throwErrorIfNotInstanceOfBook(book)
-
-        
-    // }
-
-    // // book quantity ++ && --
-    // //if book quantity > 1 book quantity -- else remove
-
-    // removeFromBooklist(book) {
-    //     Validator.throwErrorIfNotInstanceOfBook(book)
-
-    //     const index = this.bookList.findIndex(element => element.uuid === book.uuid) 
-
-    //     if(index === -1) throw new Error('this doesnt match any book on the list')
-    //     this.bookList = this.bookList.filter((_, bookIndex) => bookIndex !== index)
-    // }
-
-
     addToBooklist(book) {
         Validator.throwErrorIfNotInstanceOfBook(book)
 
-        const foundItem = this.bookList.find(element => element.uuid === book.uuid)
+        const foundBook = this.bookList.find(element => element.uuid === book.uuid)//sprawdzic czy w availablebooks
 
-        if(foundItem) {
+        if(foundBook) {
 
-            foundItem.increaseQuantity()
+            foundBook.increaseQuantity()
 
         } else {
 
@@ -42,30 +24,25 @@ export default class Library {
             this.availableBooks.push(book);
 
         }
-
     }
 
     removeFromBooklist(book) {
         Validator.throwErrorIfNotInstanceOfBook(book)
 
         const index = this.bookList.findIndex(element => element.uuid === book.uuid)
-        const index2 = this.availableBooks.findIndex(element => element.uuid === book.uuid)
-        
+
         if(index === -1) throw new Error('this doesnt match any book on the list')
-        if(index2 === -1) throw new Error('this doesnt match any book on the list')
-        
+
         const bookToRemove = this.bookList[index]
-        const bookToRemove2 = this.bookList[index]
 
         if(bookToRemove.quantity > 1) {
 
             bookToRemove.decreaseQuantity()
-            bookToRemove2.decreaseQuantity()
 
         } else {
 
             this.bookList = this.bookList.filter((_, bookIndex) => bookIndex !== index)
-            this.availableBooks = this.availableBooks.filter((_, bookIndex) => bookIndex !== index2)
+            this.availableBooks = this.availableBooks.filter((_, bookIndex) => bookIndex !== index) // X
         }
     }
 
@@ -79,19 +56,19 @@ export default class Library {
     removeFromUserLIst(user) {
         Validator.throwErrorIfNotInstanceOfUser(user)
 
-      const index = this.userList.findIndex(element => element.uuid === user.uuid) 
+        const index = this.userList.findIndex(element => element.uuid === user.uuid) 
 
-      if(index === -1) throw new Error('this doesnt match any user on the list')
+        if(index === -1) throw new Error('this doesnt match any user on the list')
 
-      this.userList = this.userList.filter((_, userIndex) => userIndex !== index)
+        this.userList = this.userList.filter((_, userIndex) => userIndex !== index)
     }
 
     borrowBook(user, book) {
         Validator.throwErrorIfNotInstanceOfUser(user)
         Validator.throwErrorIfNotInstanceOfBook(book)
 
-        const userIndex = this.userList.findIndex(item => item.uuid === user.uuid);
-        const bookIndex = this.availableBooks.findIndex(item => item.uuid === book.uuid);
+        const userIndex = this.userList.findIndex(element => element.uuid === user.uuid);
+        const bookIndex = this.availableBooks.findIndex(element => element.uuid === book.uuid);
 
         if (userIndex === -1) throw new Error('User does not exist');
         if (bookIndex === -1) throw new Error('Book is not available');
@@ -100,11 +77,17 @@ export default class Library {
         booking.addToBooklist(book);
         this.bookingList.push(booking);
 
-        const bookToRemove = this.availableBooks[bookIndex]
+        // Book LibraryBook
+        const bookToborrow = this.availableBooks[bookIndex]
 
-        if(bookToRemove.quantity > 1) {
+        const bookCopy = new Book(bookToborrow.title, bookToborrow.author, bookToborrow.img, bookToborrow.description);
 
-            bookToRemove.decreaseQuantity()
+        bookCopy.changeUuid(bookToborrow.uuid);
+        bookCopy.changeQuantity(bookToborrow.quantity -1);
+
+        if(bookToborrow.quantity > 1) {
+
+            this.availableBooks = this.availableBooks.filter(item => item.uuid !== bookCopy.uuid).concat(bookCopy);
 
         } else {
 
@@ -124,13 +107,19 @@ export default class Library {
         if (bookingIndex === -1) throw new Error('User has no active bookings');
 
         const booking = this.bookingList[bookingIndex];
-        booking.bookRetrun(returnDate);
+        // booking.returnBook(returnDate);
+        console.log(booking.returnBook(returnDate))
 
-        const bookTOreturn = this.availableBooks.find(element => element.uuid === book.uuid)
+        const bookToReturn = this.availableBooks.find(element => element.uuid === book.uuid)
 
-        if(bookTOreturn) {
+        const bookCopy = new Book(bookToReturn.title, bookToReturn.author, bookToReturn.img, bookToReturn.description);
 
-            bookTOreturn.increaseQuantity()
+        bookCopy.changeUuid(bookToReturn.uuid);
+        bookCopy.changeQuantity(bookToReturn.quantity +1);
+
+        if(bookToReturn) {
+
+            this.availableBooks = this.availableBooks.filter(item => item.uuid !== bookCopy.uuid).concat(bookCopy);
 
         } else {
 
@@ -139,3 +128,5 @@ export default class Library {
         }
     }
 }
+
+// https://github.com/Localhost-Group/JS-TS-Fundamentals/blob/main/2.%20JS%20Object-oriented%20Programming/zadania/exam/Starlink_2-0.md

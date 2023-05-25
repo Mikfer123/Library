@@ -1,6 +1,5 @@
 import User from "./user.mjs";
 import Book from "./book.mjs";
-import Booking from "./booking.mjs";
 import Library from "./library.mjs";
 
 const user1 = new User("John", "Wick")
@@ -31,8 +30,7 @@ const book1 = new Book("Lord of the rings", "J.R.R. Tolkien", "LOTR.jpg",
 
  const book4 = new Book("1984", "George Orwell", "1984.jpg",
  `Written more than 70 years ago, 1984 was George Orwell’s chilling prophecy about the future. And while 1984 has come and gone,
- his dystopian vision of a government that will do anything to control the narrative is timelier than ever...
- `)
+ his dystopian vision of a government that will do anything to control the narrative is timelier than ever...`)
 
  const book5 = new Book("Sherlock Holmes: The Hound of the Baskervilles", "Arthur Conan Doyle", "SHHB.jpg",
  `In this, one of the most famous of Doyle's mysteries, the tale of an ancient curse and a savage ghostly hound comes frighteningly to life. 
@@ -58,15 +56,16 @@ library1.addToUserList(user4)
 library1.addToUserList(user5)
 
 
+// console.log(library1)
+library1.borrowBook(user1, book1)
 
-// library1.borrowBook(user1, book1)
-
+library1.returnBook(user1, book1, new Date(2023, 5, 25))
 
 console.log(library1)
-
-// library1.returnBook(user1, book1, new Date(2023, 4, 28))
-
-
+ 
+library1.borrowBook(user2, book1)
+ 
+console.log(library1)
 
 // library1.removeFromBooklist(book1)
 

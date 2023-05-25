@@ -1,12 +1,16 @@
 import Validator from "./validator.mjs"
 
+const weekInMiliseconds = 7 * 24 * 60 * 60 * 1000
+const dayInMiliseconds = 1000 * 3600 * 24
+
+
 export default class Booking {
     constructor(user) {
         Validator.throwErrorIfNotInstanceOfUser(user)
         this.status = "Checked out"
         this.user = user
         this.bookingDate = new Date()
-        this.returnDate = new Date(this.bookingDate.getTime() + (7 * 24 * 60 * 60 * 1000))
+        this.returnDate = new Date(this.bookingDate.getTime() + weekInMiliseconds)
         this.bookList = []
         this.fine = 0
     }
@@ -39,13 +43,15 @@ export default class Booking {
         }
     }
 
-    bookRetrun(date) {
+    returnBook(date) { //return
         Validator.validateDate(date)
         const timeDifference = date.getTime() - this.returnDate.getTime();
-        const daysDifference = Math.ceil(timeDifference / (1000 * 3600 * 24));
+        const daysDifference = Math.ceil(timeDifference / dayInMiliseconds);
         this.status = "Checked in"
 
         this.fine = daysDifference > 0 ? daysDifference : 0
+
+        return `the fine is ${this.fine}$ `
     }
 }
 

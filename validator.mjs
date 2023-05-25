@@ -25,4 +25,9 @@ export default class Validator {
     static validateDate(input) {
         if (Object.prototype.toString.call(input) !== "[object Date]") throw new Error("Given input must be a date")
     }
+
+    static validateUuid(input) {
+        const uuidPattern = /[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}/
+        if(!uuidPattern.test(input)) throw new Error('Given input has to be a uuid')
+    }
 }
