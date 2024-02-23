@@ -12,6 +12,4 @@ export interface BookingModel{
     addToBooklist(book: LibraryBookModel): void
     removeFromBooklist(book: LibraryBookModel): void | never
     returnBook(date: Date): string
-
-    //never
  }
