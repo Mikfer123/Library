@@ -1,7 +1,7 @@
-import User from "./user.js";
-import Book from "./book.js";
-import Library from "./library.js";
-import LibraryBook from "./libraryBook.js";
+import User from "./user";
+import Book from "./book";
+import Library from "./library";
+import LibraryBook from "./libraryBook";
 
 const user1 = new User("John", "Wick")
 const user2 = new User("Indiana", "Jones")

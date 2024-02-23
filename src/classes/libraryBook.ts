@@ -1,5 +1,5 @@
-import { LibraryBookModel } from "../interfaces/libraryBookInterface.js";
-import Book from "./book.js";
+import { LibraryBookModel } from "../interfaces/libraryBookInterface";
+import Book from "./book";
 
 
 export default class LibraryBook extends Book implements LibraryBookModel {

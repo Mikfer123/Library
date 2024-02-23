@@ -1,4 +1,4 @@
-import { BookModel } from "./bookInterfac";
+import { BookModel } from "./bookInterface";
 
 export interface LibraryBookModel extends BookModel {
     quantity: number

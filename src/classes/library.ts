@@ -1,9 +1,9 @@
-import { BookModel } from "../interfaces/bookInterfac.js";
-import { BookingModel } from "../interfaces/bookingInterface.js";
-import { LibraryBookModel } from "../interfaces/libraryBookInterface.js";
-import { UserModel } from "../interfaces/userInterface.js";
-import Booking from "./booking.js";
-import User from "./user.js";
+import { BookModel } from "../interfaces/bookInterface";
+import { BookingModel } from "../interfaces/bookingInterface";
+import { LibraryBookModel } from "../interfaces/libraryBookInterface";
+import { UserModel } from "../interfaces/userInterface";
+import Booking from "./booking";
+import User from "./user";
 
 
 export default class Library {

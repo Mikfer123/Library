@@ -1,5 +1,5 @@
 import {v4 as uuidv4} from 'uuid';
-import { BookModel } from '../interfaces/bookInterfac';
+import { BookModel } from '../interfaces/bookInterface';
 
 export default class Book implements BookModel {
     title: string

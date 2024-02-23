@@ -1,4 +1,4 @@
-import { BookModel } from "../interfaces/bookInterfac"
+import { BookModel } from "../interfaces/bookInterface"
 import { BookingModel } from "../interfaces/bookingInterface"
 import {LibraryBookModel } from "../interfaces/libraryBookInterface"
 import { UserModel } from "../interfaces/userInterface"
